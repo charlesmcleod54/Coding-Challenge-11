@@ -97,3 +97,47 @@ console.log(book1.getDetails());
 
 console.log(borrower1.borrowedBooks);
 
+// Task 5: Implementing Book Returns
+class Library {
+    constructor() {
+        this.books = [];
+        this.borrowers = [];
+    }
+
+    addBook(book) {
+        this.books.push(book);
+    }
+
+    listBooks() {
+        this.books.forEach(book => {
+            console.log(book.getDetails());
+        });
+    }
+
+    lendBook(borrowerId, isbn) {
+        const book = this.books.find(b => b.isbn === isbn);
+        const borrower = this.borrowers.find(b => b.borrowerId === borrowerId);
+
+        if (book && book.copies > 0 && borrower) {
+            book.updateCopies(-1);
+            borrower.borrowBook(book.title);
+        }
+    }
+
+    returnBook(borrowerId, isbn) {
+        const book = this.books.find(b => b.isbn === isbn);
+        const borrower = this.borrowers.find(b => b.borrowerId ===  borrowerId);
+
+        if (book && borrower) {
+            book.updateCopies(1);
+            borrower.returnBook(book.title);
+        }
+    }
+}
+
+library.addBook(book1);
+library.lendBook(362, 274958);
+library.returnBook(362, 274958);
+console.log(book1.getDetails());
+
+console.log(borrower1.borrowedBooks);
